@@ -47,7 +47,7 @@ for more commands refer `package.json`
 
 
 ## Status
-Project is progress.
+Project is in progress.
 
 ## License
 MIT
