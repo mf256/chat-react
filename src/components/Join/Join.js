@@ -1,25 +1,61 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import classNames from 'classnames';
 
-import './Join.module.scss';
+import styles from './Join.module.scss';
 
 function Join() {
   const [name, setName] = useState('');
   const [room, setRoom] = useState('');
+  const [error, setError] = useState('');
+  const history = useHistory();
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (name && room) {
+      history.push(`/chat?name=${name}&room=${room}`);
+    } else {
+      setError('Please enter user and room name.');
+    }
+  };
 
   return (
-    <div className="joinOuterContainer">
-      <div className="joinInnerContainer">
-        <h1 className="heading">Join</h1>
-        <div>
-          <input placeholder="Name" className="joinInput" type="text" onChange={(event) => setName(event.target.value)} />
+    <div className={classNames('container', styles.container)}>
+      <div className="content has-text-centered">
+        <h2>Join the Chat</h2>
+        <div className="field">
+          <input
+            placeholder="Name"
+            className="input is-info"
+            type="text"
+            onChange={(event) => setName(event.target.value)}
+          />
         </div>
-        <div>
-          <input placeholder="Room" className="joinInput mt-20" type="text" onChange={(event) => setRoom(event.target.value)} />
+        <div className="field">
+          <input
+            placeholder="Room"
+            className="input is-info"
+            type="text"
+            onChange={(event) => setRoom(event.target.value)}
+            onKeyPress={(event) =>
+              event.key === 'Enter' ? handleSubmit(event) : null
+            }
+          />
         </div>
-        <Link onClick={e => (!name || !room) ? e.preventDefault() : null} to={`/chat?name=${name}&room=${room}`}>
-          <button className={'button mt-20'} type="submit">Sign In</button>
-        </Link>
+        <button
+          className={'button is-link is-fullwidth'}
+          type="submit"
+          onClick={(event) => handleSubmit(event)}
+        >
+          Sign In
+        </button>
+        {error && (
+          <div
+            className={`notification is-danger is-light ${styles.notification}`}
+          >
+            {error}
+          </div>
+        )}
       </div>
     </div>
   );
