@@ -20,6 +20,7 @@ const Chat = ({ location }) => {
   const [users, setUsers] = useState('');
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     const { name, room } = queryString.parse(location.search);
@@ -29,7 +30,7 @@ const Chat = ({ location }) => {
     socket = io(ENDPOINT);
     socket.emit('join', { name, room }, (error) => {
       if (error) {
-        alert(error);
+        setError(error);
       }
     });
 
@@ -46,6 +47,10 @@ const Chat = ({ location }) => {
 
     socket.on('roomData', ({ users }) => {
       setUsers(users);
+    });
+
+    socket.on('connect_error', function (e) {
+      setError('Could not connect to server!');
     });
   }, []);
 
@@ -68,6 +73,13 @@ const Chat = ({ location }) => {
           sendMessage={sendMessage}
         />
       </div>
+      {error && (
+        <div
+          className={`notification is-danger is-light ${styles.notification}`}
+        >
+          {error}
+        </div>
+      )}
       <ActiveUsers users={users} />
     </div>
   );
