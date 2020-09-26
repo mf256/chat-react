@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import classNames from 'classnames';
 
+import ErrorInfo from 'components/ErrorInfo/ErrorInfo';
+
 import styles from './Join.module.scss';
 
 function Join() {
@@ -49,13 +51,7 @@ function Join() {
         >
           Sign In
         </button>
-        {error && (
-          <div
-            className={`notification is-danger is-light ${styles.notification}`}
-          >
-            {error}
-          </div>
-        )}
+        <ErrorInfo errorMessage={error} styles={styles} />
       </div>
     </div>
   );

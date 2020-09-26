@@ -6,27 +6,29 @@ import styles from './Message.module.scss';
 import ReactEmoji from 'react-emoji';
 
 const Message = ({ message: { text, user }, name }) => {
-  let isSentByCurrentUser = false;
-
   const trimmedName = name.trim().toLowerCase();
+  const isSentByCurrentUser = user === trimmedName;
+  const isSentByAdminUser = user === 'admin';
 
-  if (user === trimmedName) {
-    isSentByCurrentUser = true;
-  }
-
-  const currentUserStyles = ['is-link', styles.myMessage];
+  const currentUserStyles = ['is-link', styles['my-message']];
+  const adminUserStyles = styles['admin-message'];
+  const otherUserStyles = ['is-success'];
   const className = classNames(
     'message',
     styles.message,
-    isSentByCurrentUser && currentUserStyles
+    isSentByCurrentUser && currentUserStyles,
+    isSentByAdminUser && adminUserStyles,
+    !isSentByCurrentUser && !isSentByAdminUser && otherUserStyles
   );
 
   return (
     <div className={className}>
-      <div class="message-header">
+      <div className={classNames('message-header', styles['message-header'])}>
         {isSentByCurrentUser ? trimmedName : user}
       </div>
-      <div class="message-body">{ReactEmoji.emojify(text)}</div>
+      <div className={classNames('message-body', styles['message-body'])}>
+        {ReactEmoji.emojify(text)}
+      </div>
     </div>
   );
 };

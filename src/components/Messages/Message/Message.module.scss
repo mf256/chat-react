@@ -1,10 +1,38 @@
 .message {
-  min-width: 20%;
-  width: initial;
+  min-width: 10%;
+  width: fit-content;
   max-width: 70%;
   margin-bottom: 2rem;
+  .message-header {
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
+  }
+  .message-body {
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+  }
 }
 
-.myMessage {
+.my-message {
   margin: 0 0 0 auto;
+  text-align: right;
+  justify-content: flex-end;
+  .message-header {
+    justify-content: flex-end;
+  }
+  .message-body {
+    text-align: right;
+  }
+}
+
+.admin-message {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  .message-header {
+    display: none;
+  }
+  .message-body {
+    width: 100%;
+  }
 }

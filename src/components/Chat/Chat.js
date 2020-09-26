@@ -4,6 +4,7 @@ import io from 'socket.io-client';
 import classNames from 'classnames';
 
 import ActiveUsers from 'components/ActiveUsers/ActiveUsers';
+import ErrorInfo from 'components/ErrorInfo/ErrorInfo';
 import InfoBar from 'components/InfoBar/InfoBar';
 import Input from 'components/Input/Input';
 import Messages from 'components/Messages/Messages';
@@ -67,19 +68,15 @@ const Chat = ({ location }) => {
       <div className="content has-text-centered">
         <InfoBar room={room} />
         <Messages messages={messages} name={name} />
-        <Input
-          message={message}
-          setMessage={setMessage}
-          sendMessage={sendMessage}
-        />
+        {!error && (
+          <Input
+            message={message}
+            setMessage={setMessage}
+            sendMessage={sendMessage}
+          />
+        )}
       </div>
-      {error && (
-        <div
-          className={`notification is-danger is-light ${styles.notification}`}
-        >
-          {error}
-        </div>
-      )}
+      <ErrorInfo errorMessage={error} styles={styles} />
       <ActiveUsers users={users} />
     </div>
   );
