@@ -35,6 +35,8 @@ Goal of project is to create simple chat application using React.
 ## Screenshots
 
 ![Example screenshot 1](./doc/screen1.png)
+\
+\
 ![Example screenshot 2](./doc/screen2.png)
 
 ## Setup
